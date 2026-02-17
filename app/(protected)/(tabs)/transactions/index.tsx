@@ -1,12 +1,7 @@
-import ScreenLayout from "@/components/layout/screen-layout";
-import { Text } from "react-native";
+import TransactionsScreen from "@/components/features/transactions/transactions-screen";
 
-export default function TransactionsScreen() {
+export default function Index() {
   return (
-    <ScreenLayout screen={"transactions"}>
-      <Text className={"text-red-500"}>
-        Transactions screen
-      </Text>
-    </ScreenLayout>
+    <TransactionsScreen/>
   );
 }

@@ -21,10 +21,10 @@ export default function TabsLayout() {
     <Tabs
       screenOptions={{
         headerShown: false,
-        tabBarActiveTintColor: "#000",
+        tabBarActiveTintColor: "#56034C",
         tabBarInactiveTintColor: "#9CA3AF",
         tabBarStyle: {
-          height: 70,
+          height: 64,
           paddingBottom: 4,
           borderTopWidth: 0,
           elevation: 0,
@@ -51,14 +51,14 @@ export default function TabsLayout() {
                   return (
                     <View
                       style={{
-                        backgroundColor: "#000",
+                        backgroundColor: "#56034C",
                         width: 60,
                         height: 60,
                         borderRadius: 30,
                         justifyContent: "center",
                         alignItems: "center",
                         marginTop: -25,
-                        shadowColor: "#000",
+                        shadowColor: "#56034C",
                         shadowOpacity: 0.25,
                         shadowRadius: 10,
                         shadowOffset: { width: 0, height: 5 },

@@ -1,11 +1,7 @@
-import ScreenLayout from "@/components/layout/screen-layout";
-import {Text} from 'react-native';
+import SignUpScreen from "@/components/features/auth/sign-up-screen";
 
-
-export default function SignUpScreen() {
+export default function Index() {
   return (
-    <ScreenLayout screen={"signup"}>
-      <Text>Sign Up</Text>
-    </ScreenLayout>
+   <SignUpScreen/>
   )
 };

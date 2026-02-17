@@ -1,10 +1,7 @@
-import ScreenLayout from "@/components/layout/screen-layout";
-import {Text} from 'react-native';
+import VerifyOtpScreen from "@/components/features/auth/verify-otp-screen";
 
-export default function VerifyOtpScreen() {
+export default function Index() {
   return(
-    <ScreenLayout screen={"verify-otp"}>
-      <Text>Verify Otp</Text>
-    </ScreenLayout>
+    <VerifyOtpScreen/>
   )
 }

@@ -1,12 +1,7 @@
-import ScreenLayout from "@/components/layout/screen-layout";
-import { Text } from "react-native";
+import SettingsScreen from "@/components/features/settings/settings-screen";
 
-export default function SettingsScree() {
+export default function Index() {
   return (
-    <ScreenLayout screen={"settings"}>
-      <Text className={"text-red-500"}>
-        Setting page
-      </Text>
-    </ScreenLayout>
+   <SettingsScreen/>
   );
 }

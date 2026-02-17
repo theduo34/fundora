@@ -1,10 +1,7 @@
-import {Text} from "react-native";
-import ScreenLayout from "@/components/layout/screen-layout";
+import LoginScreen from "@/components/features/auth/login-screen";
 
-export default function LoginScreen() {
+export default function Index() {
   return(
-    <ScreenLayout screen={"login"}>
-      <Text>Login In</Text>
-    </ScreenLayout>
+   <LoginScreen/>
   )
 }

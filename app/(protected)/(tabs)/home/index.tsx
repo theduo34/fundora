@@ -1,12 +1,7 @@
-import ScreenLayout from "@/components/layout/screen-layout";
-import { Text } from "react-native";
+import HomeScreen from "@/components/features/home/home-screen";
 
-export default function HomeScreen() {
+export default function Index() {
   return (
-    <ScreenLayout screen={"home"}>
-      <Text className={"text-red-500"}>
-        Home Screen
-      </Text>
-    </ScreenLayout>
+    <HomeScreen/>
   );
 }
