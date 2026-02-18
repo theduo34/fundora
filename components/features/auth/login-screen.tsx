@@ -3,7 +3,10 @@ import {Text} from "react-native";
 
 const LoginScreen = () => {
   return(
-    <ScreenLayout screen={"login"}>
+    <ScreenLayout
+      screen={"login"}
+      showNavbar={false}
+    >
       <Text>Login In</Text>
     </ScreenLayout>
   )
