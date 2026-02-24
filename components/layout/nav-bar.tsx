@@ -40,7 +40,7 @@ export const Navbar = (
   return (
     <View
       style={{paddingTop: insets.top}}
-      className={`
+      className={`border-b
         ${isTransparent ? "" : ""}
         ${className}
       `}

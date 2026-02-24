@@ -1,4 +1,4 @@
-import HomeScreen from "@/components/features/home/home-screen";
+import HomeScreen from "@/components/screens/home/home-screen";
 
 export default function Index() {
   return (

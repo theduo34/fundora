@@ -1,8 +1,7 @@
 import React, {ReactNode} from "react";
 import {SafeAreaView} from "react-native-safe-area-context";
 import {Navbar} from "@/components/layout/nav-bar";
-import {Animated, View} from "react-native";
-import ScrollView = Animated.ScrollView;
+import {ScrollView, View} from "react-native";
 
 type ScreenLayoutProps = {
   children: ReactNode;
@@ -35,18 +34,20 @@ const ScreenLayout = (
     className = "",
   }: ScreenLayoutProps) => {
 
-  const content = scrollable ? (
-    <ScrollView
-      contentContainerClassName={`${className}`}
-      showsVerticalScrollIndicator={false}
-    >
-      {children}
-    </ScrollView>
-  ) : (
-    <View className={`${className}`}>
+  const inner = (
+    <View className={`flex-1 flex-col ${className}`}>
       {children}
     </View>
   );
+
+  const content = scrollable ? (
+    <ScrollView
+      showsVerticalScrollIndicator={false}
+      contentContainerStyle={{flexGrow: 1}}
+    >
+      {inner}
+    </ScrollView>
+  ) : inner;
 
   return (
     <SafeAreaView className="flex-1" edges={["top"]}>
@@ -61,9 +62,9 @@ const ScreenLayout = (
             variant={navbarVariant}
           />
         )}
-       <View className="p-4 flex-1 bg-background">
-         {content}
-       </View>
+        <View className="p-4 flex-1 bg-background">
+          {content}
+        </View>
       </View>
     </SafeAreaView>
   );

@@ -14,6 +14,13 @@ export const palette = {
     600: "var(--chart-1)",
     500: "var(--ring)",
   },
+  card: {
+    900: "var(--chart-4)",
+    800: "var(--chart-4)",
+    700: "var(--chart-5)",
+    600: "var(--chart-5)",
+    500: "var(--chart-5)",
+  }
 };
 
 export const gradients: Record<string, GradientTuple> = {
@@ -23,6 +30,13 @@ export const gradients: Record<string, GradientTuple> = {
     palette.brand[700] as ColorValue,
     palette.brand[600] as ColorValue,
     palette.brand[500] as ColorValue,
+  ],
+  secondary: [
+    palette.card[900] as ColorValue,
+    palette.card[800] as ColorValue,
+    palette.card[700] as ColorValue,
+    palette.card[600] as ColorValue,
+    palette.card[500] as ColorValue,
   ],
 };
 
