@@ -19,7 +19,7 @@ export const CardCarousel: React.FC<CardCarouselProps> = ({cards}) => {
     <View className="gap-y-2">
       <Carousel
         loop={true}
-        autoPlay={true}
+        autoPlay={false} //will
         autoPlayInterval={3000}
         width={SCREEN_WIDTH}
         height={CARD_HEIGHT}

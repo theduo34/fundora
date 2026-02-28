@@ -27,7 +27,7 @@ const TransactionAvatar: React.FC<{ tx: Transaction }> = ({tx}) => {
     return (
       <Image
         source={{uri: logoUrl}}
-        className="w-11 h-11 rounded-full bg-card border border-secondary-foreground"
+        className="w-11 h-11 rounded-full bg-muted border border-secondary-foreground"
         resizeMode="cover"
       />
     );
@@ -59,21 +59,21 @@ export const TransactionItem: React.FC<TransactionItemProps> = ({transaction: tx
   return (
     <Pressable
       onPress={() => onPress?.(tx)}
-      className={`flex-row items-center gap-x-2 p-2 active:opacity-60 rounded-lg bg-secondary-foreground`}
+      className={`flex-row items-center gap-x-2 p-2 active:opacity-60 rounded-lg bg-card`}
     >
       <TransactionAvatar tx={tx}/>
 
       <View className="flex-1 gap-y-0.5">
-        <Text className="text-sm font-semibold text-foreground" numberOfLines={1}>
+        <Text className="text-sm font-semibold " numberOfLines={1}>
           {tx.description}
         </Text>
-        <Text className="text-xs text-muted-foreground">
+        <Text className="text-xs ">
           {formatDate(tx.createdAt)}
         </Text>
       </View>
 
       <Text
-        className={`text-sm font-bold ${getAmountColor(tx.type)}`}
+        className={`text-sm font-semibold ${getAmountColor(tx.type)}`}
       >
         {formatAmount(tx)}
       </Text>

@@ -27,12 +27,12 @@ export const QuickActionButton: React.FC<QuickActionButtonProps> = ({action, onP
   return (
     <Pressable
       onPress={() => onPress(action.key)}
-      className="flex-1 items-center gap-y-2 active:opacity-60 bg-secondary-foreground p-4 rounded-lg"
+      className="flex-1 items-center gap-y-2 active:opacity-60 bg-card p-4 rounded-lg"
     >
       <View className="w-13 h-13 rounded-2xl bg-card items-center justify-center">
         <IconComponent size={22}  strokeWidth={1.8} />
       </View>
-      <Text className="text-xs font-medium text-foreground text-center">
+      <Text className="text-xs font-medium text-center">
         {action.label}
       </Text>
     </Pressable>
