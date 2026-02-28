@@ -1,8 +1,9 @@
 import React from "react";
 import {View, Text, Image, Pressable} from "react-native";
-import {Transaction} from "@/components/features/home/index";
+import {Transaction} from "@/components/features/home";
 import {formatAmount, formatDate} from "@/lib/helper";
 import {ChevronRight} from "lucide-react-native";
+import {useRouter} from "expo-router";
 
 const getAmountColor = (type: Transaction["type"]): string => {
   switch (type) {
@@ -91,6 +92,7 @@ interface TransactionListProps {
 }
 
 export const TransactionList: React.FC<TransactionListProps> = ({transactions, onViewAll, onTransactionPress, title = "Last Transaction", limit = 5,}) => {
+  const router = useRouter();
   const visible = transactions.slice(0, limit);
 
   return (
@@ -108,7 +110,10 @@ export const TransactionList: React.FC<TransactionListProps> = ({transactions, o
           <TransactionItem
             key={tx.id}
             transaction={tx}
-            onPress={onTransactionPress}
+            onPress={(tx) => router.push({
+              pathname: "/(stack)/transactions/[id]",
+              params: {id: tx.id},
+            } as any)}
             isLast={i === visible.length - 1}
           />
         ))}
