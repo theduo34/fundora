@@ -2,6 +2,7 @@ import React, {ReactNode} from "react";
 import {SafeAreaView} from "react-native-safe-area-context";
 import {Navbar} from "@/components/layout/nav-bar";
 import {ScrollView, View} from "react-native";
+import {useRootNavigationState, useSegments} from "expo-router";
 
 type ScreenLayoutProps = {
   children: ReactNode;
@@ -25,7 +26,7 @@ const ScreenLayout = (
     screen,
     showNavbar = true,
     navbarTitle,
-    showBack = false,
+    showBack,
     onBackPress,
     navbarLeftContent,
     navbarRightContent,
@@ -33,6 +34,17 @@ const ScreenLayout = (
     scrollable = true,
     className = "",
   }: ScreenLayoutProps) => {
+  const segments = useSegments();
+  const rootState = useRootNavigationState();
+
+  const isInsideTabs = segments.includes("(tabs)" as never);
+  const rootStackCount = rootState?.routes?.length ?? 1;
+
+  const resolvedShowBack = showBack !== undefined
+    ? showBack
+    : isInsideTabs
+      ? rootStackCount > 1
+      : true;
 
   const inner = (
     <View className={`flex-1 flex-col ${className}`}>
@@ -55,7 +67,7 @@ const ScreenLayout = (
         {showNavbar && (
           <Navbar
             title={navbarTitle}
-            showBack={showBack}
+            showBack={resolvedShowBack}
             onBackPress={onBackPress}
             leftContent={navbarLeftContent}
             rightContent={navbarRightContent}

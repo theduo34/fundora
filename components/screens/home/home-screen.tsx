@@ -6,7 +6,7 @@ import ScreenLayout from "@/components/layout/screen-layout";
 import {dummyCards, dummyTransactions, QuickActionKey, quickActions} from "@/components/features/home";
 import {CardCarousel} from "@/components/features/home/card-carousel";
 import {QuickActionsRow} from "@/components/features/home/quick-actions";
-import {TransactionList} from "@/components/features/home/transaction-list";
+import {TransactionList} from "@/components/features/transactions/transaction-list";
 import {UserProfile} from "@/components/shared/user-profile";
 import {Pressable} from "react-native";
 

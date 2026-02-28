@@ -62,7 +62,6 @@ const NotificationsScreen: React.FC = () => {
   return (
     <ScreenLayout
       screen="notifications"
-      showBack
       navbarTitle="Notifications"
       scrollable={false}
     >

@@ -4,6 +4,7 @@ export default function StackLayout() {
   return(
     <Stack screenOptions={{ headerShown: false }}>
       <Stack.Screen name="notifications"/>
+      <Stack.Screen name="transactions/[id]"/>
     </Stack>
   )
 }

@@ -1,4 +1,4 @@
-import TransactionsScreen from "@/components/features/transactions/transactions-screen";
+import TransactionsScreen from "@/components/screens/transactions/transactions-screen";
 
 export default function Index() {
   return (
