@@ -1,12 +1,7 @@
-import ScreenLayout from "@/components/layout/screen-layout";
-import { Text } from "react-native";
+import CardsScreen from "@/components/screens/cards/cards-screen";
 
 export default function Index() {
   return (
-    <ScreenLayout screen={"cards"}>
-      <Text className={"text-red-500"}>
-        Card screen
-      </Text>
-    </ScreenLayout>
+    <CardsScreen/>
   );
 }

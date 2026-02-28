@@ -2,7 +2,6 @@ import React, {ReactNode} from "react";
 import {SafeAreaView} from "react-native-safe-area-context";
 import {Navbar} from "@/components/layout/nav-bar";
 import {ScrollView, View} from "react-native";
-import {useRootNavigationState, useSegments} from "expo-router";
 
 type ScreenLayoutProps = {
   children: ReactNode;
@@ -20,13 +19,13 @@ type ScreenLayoutProps = {
   className?: string;
 };
 
-const ScreenLayout = (
+const SlackLayout = (
   {
     children,
     screen,
     showNavbar = true,
     navbarTitle,
-    showBack,
+    showBack = false,
     onBackPress,
     navbarLeftContent,
     navbarRightContent,
@@ -34,17 +33,6 @@ const ScreenLayout = (
     scrollable = true,
     className = "",
   }: ScreenLayoutProps) => {
-  const segments = useSegments();
-  const rootState = useRootNavigationState();
-
-  const isInsideTabs = segments.includes("(tabs)" as never);
-  const rootStackCount = rootState?.routes?.length ?? 1;
-
-  const resolvedShowBack = showBack !== undefined
-    ? showBack
-    : isInsideTabs
-      ? rootStackCount > 1
-      : true;
 
   const inner = (
     <View className={`flex-1 flex-col ${className}`}>
@@ -67,14 +55,14 @@ const ScreenLayout = (
         {showNavbar && (
           <Navbar
             title={navbarTitle}
-            showBack={resolvedShowBack}
+            showBack={showBack}
             onBackPress={onBackPress}
             leftContent={navbarLeftContent}
             rightContent={navbarRightContent}
             variant={navbarVariant}
           />
         )}
-        <View className="p-4  border flex-1 bg-background">
+        <View className="p-4 flex-1 bg-background">
           {content}
         </View>
       </View>
@@ -82,4 +70,4 @@ const ScreenLayout = (
   );
 };
 
-export default ScreenLayout;
+export default SlackLayout;

@@ -1,4 +1,4 @@
-import SettingsScreen from "@/components/features/settings/settings-screen";
+import SettingsScreen from "@/components/screens/setttings/settings-screen";
 
 export default function Index() {
   return (
