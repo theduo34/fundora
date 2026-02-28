@@ -24,7 +24,7 @@ const HomeScreen: React.FC = () => {
   };
 
   const navigationToNotification = () => {
-    return '';
+    router.push("/notifications");
   }
 
   return (
