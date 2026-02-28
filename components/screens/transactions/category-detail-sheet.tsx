@@ -119,7 +119,7 @@ export const CategoryDetailSheet: React.FC<CategoryDetailSheetProps> = ({item}) 
       <View className="h-px bg-border"/>
 
       <View className="gap-y-3">
-        <Text className="text-sm font-bold text-foreground">Transactions</Text>
+        <Text className="text-sm font-bold ">Transactions</Text>
 
         {transactions.length === 0 ? (
           <View className="items-center py-8 gap-y-2">

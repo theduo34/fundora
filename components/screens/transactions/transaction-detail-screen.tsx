@@ -49,9 +49,9 @@ const DetailRow: React.FC<{
   last?: boolean;
 }> = ({label, value, mono = false, last = false}) => (
   <View className={`flex-row justify-between items-center py-3 ${!last ? "border-b border-border" : ""}`}>
-    <Text className="text-sm text-muted-foreground">{label}</Text>
+    <Text className="text-sm">{label}</Text>
     <Text
-      className="text-sm font-semibold text-foreground max-w-[60%] text-right"
+      className="text-sm font-semibold  max-w-[60%] text-right"
       numberOfLines={1}
       style={mono ? {fontVariant: ["tabular-nums"]} : {}}
     >
@@ -83,7 +83,7 @@ export const TransactionDetailScreen = () => {
     return (
       <ScreenLayout screen="transaction-detail" navbarTitle="Transaction">
         <View className="flex-1 items-center justify-center">
-          <Text className="text-sm text-muted-foreground">Transaction not found.</Text>
+          <Text className="text-sm">Transaction not found.</Text>
         </View>
       </ScreenLayout>
     );
@@ -118,7 +118,7 @@ export const TransactionDetailScreen = () => {
             {typeCfg.sign}{formatAmount(tx.amount, tx.currency)}
           </Text>
 
-          <Text className="text-base font-semibold text-foreground">
+          <Text className="text-base font-semibold ">
             {tx.description}
           </Text>
 
