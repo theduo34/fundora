@@ -1,9 +1,10 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import {View, Text, Pressable, ScrollView, KeyboardAvoidingView, Platform, Alert} from "react-native";
 import {Button, TextInput} from "react-native-paper";
 import {useRouter} from "expo-router";
 import {SafeAreaView} from "react-native-safe-area-context";
 import {ScanFace} from "lucide-react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import {LoginForm, LoginFormErrors, validateLogin} from "@/components/features/auth";
 import {AuthInput} from "@/components/features/auth/auht-input";
 import {SocialButtons} from "@/components/features/auth/social-button";
@@ -16,6 +17,12 @@ const LoginScreen: React.FC = () => {
   const [form, setForm] = useState<LoginForm>({email: "", password: ""});
   const [errors, setErrors] = useState<LoginFormErrors>({});
   const [showPw, setShowPw] = useState(false);
+
+  useEffect(() => {
+    AsyncStorage.getItem("lastEmail").then((email) => {
+      if (email) setForm((p) => ({ ...p, email }));
+    });
+  }, []);
 
   const handleLogin = async () => {
     const errs = validateLogin(form);
@@ -39,6 +46,7 @@ const LoginScreen: React.FC = () => {
           contentContainerStyle={{flexGrow: 1, justifyContent: "center", padding: 24, gap: 20}}
           showsVerticalScrollIndicator={false}
           keyboardShouldPersistTaps="handled"
+          automaticallyAdjustKeyboardInsets={true}
         >
           <SocialButtons onGoogle={() => {}} onFacebook={() => {}} />
 
@@ -100,7 +108,7 @@ const LoginScreen: React.FC = () => {
               buttonColor="#2D0D3A"
               labelStyle={{fontWeight: "700", fontSize: 15}}
             >
-              Login
+              {loading ? "Signing in..." : "Login"}
             </Button>
 
             <Pressable

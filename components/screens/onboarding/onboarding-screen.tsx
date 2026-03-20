@@ -3,6 +3,7 @@ import {View, Text, Pressable, Dimensions, FlatList, Image, ViewToken} from "rea
 import {SafeAreaView} from "react-native-safe-area-context";
 import {Button} from "react-native-paper";
 import {useRouter} from "expo-router";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const {width: W, height: H} = Dimensions.get("window");
 const IMAGE_HEIGHT = H * 0.52;
@@ -48,11 +49,13 @@ const OnboardingScreen: React.FC = () => {
   const router = useRouter();
   const flatRef = useRef<FlatList>(null);
 
-  // Keep index in BOTH state (for re-render) and ref (for handleNext closure)
   const [active, setActive] = useState(0);
   const activeRef = useRef(0);
 
-  const goToLogin = () => router.replace("/(auth)/login" as any);
+  const goToLogin = async () => {
+    await AsyncStorage.setItem("hasSeenOnboarding", "true");
+    router.replace("/(auth)/login" as any);
+  };
 
   const handleNext = () => {
     const current = activeRef.current;
@@ -99,7 +102,7 @@ const OnboardingScreen: React.FC = () => {
         keyExtractor={(item) => item.id}
         horizontal
         pagingEnabled
-        scrollEnabled          // allow manual swipe too
+        scrollEnabled
         showsHorizontalScrollIndicator={false}
         onViewableItemsChanged={onViewableItemsChanged}
         viewabilityConfig={{viewAreaCoveragePercentThreshold: 50}}
@@ -128,7 +131,6 @@ const OnboardingScreen: React.FC = () => {
         style={{flex: 1}}
       />
 
-      {/* Bottom controls */}
       <View className="px-6 pb-6 gap-y-5 bg-background">
         <Dots count={slides.length} active={active} />
         <Button

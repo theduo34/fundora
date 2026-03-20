@@ -19,6 +19,7 @@ interface AuthInputProps {
   secureTextEntry?: boolean;
   keyboardType?: any;
   autoCapitalize?: any;
+  maxLength?: number;
   error?: string;
   left?: React.ReactNode;
   right?: React.ReactNode;
@@ -32,6 +33,7 @@ export const AuthInput: React.FC<AuthInputProps> = (
     secureTextEntry,
     keyboardType,
     autoCapitalize = "none",
+    maxLength,
     error,
     left,
     right,
@@ -44,6 +46,7 @@ export const AuthInput: React.FC<AuthInputProps> = (
     secureTextEntry={secureTextEntry}
     keyboardType={keyboardType}
     autoCapitalize={autoCapitalize}
+    maxLength={maxLength}
     autoCorrect={false}
     error={!!error}
     theme={authInputTheme}

@@ -3,6 +3,8 @@ import {View, Text, Animated, Dimensions} from "react-native";
 import {SafeAreaView} from "react-native-safe-area-context";
 import {LinearGradient} from "expo-linear-gradient";
 import {useRouter} from "expo-router";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import {useAuthStore} from "@/stores/auth.store";
 
 const {width: W, height: H} = Dimensions.get("window");
 
@@ -10,6 +12,7 @@ const SplashScreen: React.FC = () => {
   const router  = useRouter();
   const opacity = useRef(new Animated.Value(0)).current;
   const scale   = useRef(new Animated.Value(0.8)).current;
+  const signOut = useAuthStore((s) => s.signOut);
 
   useEffect(() => {
     Animated.parallel([
@@ -26,9 +29,19 @@ const SplashScreen: React.FC = () => {
       }),
     ]).start();
 
-    // Navigate to onboarding after 2.5s
-    const timer = setTimeout(() => {
-      router.replace("/onboarding" as any);
+    // Navigate to onboarding or login after 2.5s
+    const timer = setTimeout(async () => {
+      try {
+        await signOut(); // Force logout on fresh launch to simulate session security
+        const hasSeen = await AsyncStorage.getItem("hasSeenOnboarding");
+        if (hasSeen === "true") {
+          router.replace("/(auth)/login" as any);
+        } else {
+          router.replace("/(onboarding)" as any);
+        }
+      } catch (e) {
+        router.replace("/(onboarding)" as any);
+      }
     }, 2500);
 
     return () => clearTimeout(timer);
@@ -64,7 +77,7 @@ const SplashScreen: React.FC = () => {
                 letterSpacing: 2,
               }}
             >
-              Fundify
+              Fundora
             </Text>
           </View>
         </Animated.View>

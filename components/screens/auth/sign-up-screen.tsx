@@ -46,7 +46,16 @@ const SignUpScreen: React.FC = () => {
       return;
     }
 
-    router.replace("/(protected)/(tabs)/home" as any);
+    Alert.alert(
+      "Success", 
+      "Successfully registered an account", 
+      [
+        {
+          text: "OK",
+          onPress: () => router.push({ pathname: "/(auth)/verify-otp", params: { email: form.email } } as any)
+        }
+      ]
+    );
   };
 
   return (
@@ -59,6 +68,7 @@ const SignUpScreen: React.FC = () => {
           contentContainerStyle={{padding: 24, gap: 16, paddingBottom: 40}}
           showsVerticalScrollIndicator={false}
           keyboardShouldPersistTaps="handled"
+          automaticallyAdjustKeyboardInsets={true}
         >
           <View className="gap-y-1 mb-2">
             <Text className="text-2xl font-bold text-foreground">Create account</Text>
@@ -182,7 +192,7 @@ const SignUpScreen: React.FC = () => {
             buttonColor="#2D0D3A"
             labelStyle={{fontWeight: "700", fontSize: 15}}
           >
-            Create Account
+            {loading ? "Registering..." : "Create Account"}
           </Button>
 
           <View className="flex-row justify-center items-center gap-x-1">

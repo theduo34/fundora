@@ -3,6 +3,7 @@ import {View, Text, Pressable, Image, Alert} from "react-native";
 import {Button} from "react-native-paper";
 import {Phone, MapPin, Mail, Pencil} from "lucide-react-native";
 import {useRouter} from "expo-router";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import ScreenLayout from "@/components/layout/screen-layout";
 import {EditField, EditFieldKey, profileEditFields} from "@/components/features/settings/index";
 import {EditFieldModal} from "@/components/features/settings/edit-modal";
@@ -54,6 +55,7 @@ const ProfileScreen: React.FC = () => {
 
   const handleSignOut = async () => {
     await signOut();
+    await AsyncStorage.removeItem("hasSeenOnboarding"); // Allows them to see onboarding next time per user request
     router.replace("/(auth)/login" as any);
   };
 

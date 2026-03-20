@@ -2,6 +2,7 @@ import { create } from "zustand";
 import { supabase } from "@/lib/supabase";
 import { Session } from "@supabase/supabase-js";
 import { Profile } from "@/types";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 interface AuthStore {
   session: Session | null;
@@ -14,6 +15,7 @@ interface AuthStore {
   updateProfile: (updates: Partial<Profile>) => Promise<void>;
   signIn: (email: string, password: string) => Promise<{ error: string | null }>;
   signUp: (data: { email: string; password: string; firstName: string; lastName: string; phone: string }) => Promise<{ error: string | null }>;
+  verifyOtp: (email: string, token: string) => Promise<{ error: string | null }>;
   signOut: () => Promise<void>;
 }
 
@@ -66,6 +68,9 @@ export const useAuthStore = create<AuthStore>((set, get) => ({
   signIn: async (email, password) => {
     set({ loading: true });
     const { error } = await supabase.auth.signInWithPassword({ email, password });
+    if (!error) {
+      await AsyncStorage.setItem("lastEmail", email);
+    }
     set({ loading: false });
     return { error: error?.message ?? null };
   },
@@ -79,6 +84,16 @@ export const useAuthStore = create<AuthStore>((set, get) => ({
         data: { first_name: firstName, last_name: lastName, phone },
       },
     });
+    if (!error) {
+      await AsyncStorage.setItem("lastEmail", email);
+    }
+    set({ loading: false });
+    return { error: error?.message ?? null };
+  },
+
+  verifyOtp: async (email, token) => {
+    set({ loading: true });
+    const { error } = await supabase.auth.verifyOtp({ email, token, type: "signup" });
     set({ loading: false });
     return { error: error?.message ?? null };
   },

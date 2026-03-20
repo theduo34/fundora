@@ -156,6 +156,7 @@ const AddCardScreen: React.FC = () => {
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{gap: 12, paddingBottom: 40}}
         keyboardShouldPersistTaps="handled"
+        automaticallyAdjustKeyboardInsets={true}
       >
         <Text className="text-sm text-muted-foreground text-center mb-2">
           Kindly enter your card details below.
