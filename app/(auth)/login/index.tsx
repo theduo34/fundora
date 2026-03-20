@@ -1,4 +1,4 @@
-import LoginScreen from "@/components/features/auth/login-screen";
+import LoginScreen from "@/components/screens/auth/login-screen";
 
 export default function Index() {
   return(

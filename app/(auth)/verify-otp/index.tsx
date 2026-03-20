@@ -1,4 +1,4 @@
-import VerifyOtpScreen from "@/components/features/auth/verify-otp-screen";
+import VerifyOtpScreen from "@/components/screens/auth/verify-otp-screen";
 
 export default function Index() {
   return(

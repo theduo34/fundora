@@ -1,12 +1,13 @@
-import React, {useState} from "react";
+import React, {useEffect} from "react";
 import {View, Text, Pressable, SectionList} from "react-native";
 import {useRouter} from "expo-router";
 import {BellOff} from "lucide-react-native";
-
 import ScreenLayout from "@/components/layout/screen-layout";
-import {dummyNotifications, NotificationInterface} from "@/components/features/notifications";
-import {NotificationItem, } from "@/components/features/notifications/notification-item";
-
+import {NotificationInterface} from "@/components/features/notifications";
+import {NotificationItem} from "@/components/features/notifications/notification-item";
+import {useAuthStore} from "@/stores/auth.store";
+import {useNotificationStore} from "@/stores/notification.store";
+import {mapNotification} from "@/lib/mappers";
 
 const groupByDate = (notifications: NotificationInterface[]) => {
   const today = new Date();
@@ -33,26 +34,23 @@ const groupByDate = (notifications: NotificationInterface[]) => {
 
 const NotificationsScreen: React.FC = () => {
   const router = useRouter();
-  const [notifications, setNotifications] = useState(dummyNotifications);
+  const profile = useAuthStore((s) => s.profile);
+  const {notifications, fetchNotifications, markAsRead, markAllAsRead} = useNotificationStore();
 
-  const unreadCount = notifications.filter((n) => n.status === "unread").length;
-  const sections = groupByDate(notifications);
+  useEffect(() => {
+    if (profile?.id) fetchNotifications(profile.id);
+  }, [profile?.id]);
+
+  const uiNotifications = notifications.map(mapNotification);
+  const unreadCount = uiNotifications.filter((n) => n.status === "unread").length;
+  const sections = groupByDate(uiNotifications);
 
   const handleMarkAllRead = () => {
-    setNotifications((prev) =>
-      prev.map((n) => ({...n, status: "read", readAt: new Date().toISOString()}))
-    );
+    if (profile?.id) markAllAsRead(profile.id);
   };
 
   const handlePress = (n: NotificationInterface) => {
-    // Mark as read
-    setNotifications((prev) =>
-      prev.map((item) =>
-        item.id === n.id
-          ? {...item, status: "read", readAt: new Date().toISOString()}
-          : item
-      )
-    );
+    if (n.status === "unread") markAsRead(n.id);
     router.push({
       pathname: "/(protected)/(stack)/notifications/[id]",
       params: {id: n.id},

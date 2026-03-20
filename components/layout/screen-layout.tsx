@@ -74,7 +74,7 @@ const ScreenLayout = (
             variant={navbarVariant}
           />
         )}
-        <View className="p-4  border flex-1 bg-background">
+        <View className="p-4 flex-1 bg-background">
           {content}
         </View>
       </View>

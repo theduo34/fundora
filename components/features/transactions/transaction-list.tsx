@@ -9,15 +9,15 @@ const getAmountColor = (type: Transaction["type"]): string => {
   switch (type) {
     case "credit":
     case "topup":
-      return "text-green"; // green — money coming in
+      return "text-green";
     case "debit":
-      return "text-red"; // primary red — money going out
+      return "text-red";
     case "transfer":
-      return "text-secondary"; // secondary purple — peer transfer
+      return "text-secondary";
     case "convert":
-      return "text-accent"; // accent — currency conversion
+      return "text-accent";
     default:
-      return "text-foreground"; // foreground fallback
+      return "text-foreground";
   }
 };
 
@@ -106,7 +106,7 @@ export const TransactionList: React.FC<TransactionListProps> = ({transactions, o
       </View>
 
       <View className={"flex gap-2"}>
-        {visible.map((tx, i) => (
+        {visible.slice(0,5).map((tx, i) => (
           <TransactionItem
             key={tx.id}
             transaction={tx}

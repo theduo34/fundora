@@ -2,21 +2,21 @@ import React from "react";
 import {View, Text, Pressable, ScrollView} from "react-native";
 import {useLocalSearchParams, useRouter} from "expo-router";
 import {ExternalLink} from "lucide-react-native";
-
 import ScreenLayout from "@/components/layout/screen-layout";
-import {dummyNotifications} from "@/components/features/notifications";
 import {getTypeConfig} from "@/components/features/notifications/notification-item";
-
+import {useNotificationStore} from "@/stores/notification.store";
+import {mapNotification} from "@/lib/mappers";
 
 const formatAmount = (amount: number, currency: string): string =>
   (amount / 100).toLocaleString("en-US", {style: "currency", currency});
 
-
 const NotificationDetailScreen: React.FC = () => {
   const {id} = useLocalSearchParams<{id: string}>();
   const router = useRouter();
+  const notifications = useNotificationStore((s) => s.notifications);
 
-  const notification = dummyNotifications.find((n) => n.id === id);
+  const dbNotification = notifications.find((n) => n.id === id);
+  const notification = dbNotification ? mapNotification(dbNotification) : null;
 
   if (!notification) {
     return (
@@ -48,7 +48,6 @@ const NotificationDetailScreen: React.FC = () => {
       scrollable={false}
     >
       <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{paddingBottom: 32}}>
-
         <View className="items-center gap-y-4 pt-4 pb-6">
           <View
             className="w-20 h-20 rounded-full items-center justify-center"
@@ -125,7 +124,6 @@ const NotificationDetailScreen: React.FC = () => {
             <ExternalLink size={15} color="#ffffff" strokeWidth={2} />
           </Pressable>
         )}
-
       </ScrollView>
     </ScreenLayout>
   );

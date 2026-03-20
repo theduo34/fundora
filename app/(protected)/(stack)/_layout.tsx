@@ -5,6 +5,8 @@ export default function StackLayout() {
     <Stack screenOptions={{ headerShown: false }}>
       <Stack.Screen name="notifications"/>
       <Stack.Screen name="transactions/[id]"/>
+      <Stack.Screen name="add-card"/>
+      <Stack.Screen name="settings"/>
     </Stack>
   )
 }

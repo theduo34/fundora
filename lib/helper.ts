@@ -6,7 +6,7 @@ export const formatAmount = (tx: Transaction): string => {
     style: "currency",
     currency: tx.currency,
   });
-  return tx.type === "credit" ? `+${formatted}` : `-${formatted}`;
+  return tx.type === "credit" || tx.type === "topup" ? `+${formatted}` : `-${formatted}`;
 };
 
 export const formatDate = (isoString: string): string => {
@@ -33,5 +33,3 @@ export const timeAgo = (iso: string): string => {
   if (hrs < 24) return `${hrs}h ago`;
   return `${Math.floor(hrs / 24)}d ago`;
 };
-
-
