@@ -56,7 +56,7 @@ export const AppButton: React.FC<AppButtonProps> = (
             buttonColor={getButtonColor()}
             textColor={getTextColor()}
             style={[
-                {borderRadius: 14},
+                {borderRadius: 10},
                 variant === 'ghost' && {borderColor: '#56034C'},
                 style,
             ]}

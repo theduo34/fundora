@@ -78,7 +78,7 @@ const VerifyOtpScreen: React.FC = () => {
             onPress={handleVerify}
             loading={loading}
             disabled={code.length < 8 || loading}
-            style={{marginTop: 8, flex: 1}}
+            style={{marginTop: 8,}}
           />
 
           <AppButton
