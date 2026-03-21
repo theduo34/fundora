@@ -18,6 +18,16 @@ jobs:
         with:
           node-version: 20
 
+      - name: Check token exists
+        run: |
+          if [ -z "$EXPO_TOKEN" ]; then
+            echo "❌ EXPO_TOKEN is empty!"
+          else
+            echo "✅ EXPO_TOKEN is set"
+          fi
+        env:
+          EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
+
       - name: Install dependencies
         run: npm install --legacy-peer-deps
 
