@@ -28,7 +28,7 @@
       "package": "com.techcrush.Fundora"
     },
     "web": {
-      "output": "static",
+      "output": "single",
       "favicon": "./assets/images/favicon.png",
       "bundler": "metro"
     },
