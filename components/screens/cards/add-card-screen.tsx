@@ -1,7 +1,8 @@
 import React, {useState} from "react";
 import {View, Text, ScrollView, Alert} from "react-native";
-import {TextInput, Checkbox, Button, Modal, Portal} from "react-native-paper";
+import {TextInput, Checkbox, Modal, Portal} from "react-native-paper";
 import {useRouter} from "expo-router";
+import {AppButton} from "@/components/ui/app-button";
 import ScreenLayout from "@/components/layout/screen-layout";
 import {
   CardFormData, CardFormErrors,
@@ -33,15 +34,11 @@ const SuccessModal: React.FC<{visible: boolean; onDone: () => void}> = ({visible
       <Text style={{fontSize: 13, color: "#9CA3AF", textAlign: "center"}}>
         You have successfully added a card to your account.
       </Text>
-      <Button
-        mode="contained"
+      <AppButton
+        title="Done"
         onPress={onDone}
-        style={{marginTop: 8, borderRadius: 12, width: "100%"}}
-        buttonColor="#56034C"
-        labelStyle={{fontWeight: "700", fontSize: 14}}
-      >
-        Done
-      </Button>
+        style={{marginTop: 8, width: "100%"}}
+      />
     </Modal>
   </Portal>
 );
@@ -262,21 +259,13 @@ const AddCardScreen: React.FC = () => {
           </Text>
         </View>
 
-        <Button
-          mode="contained"
+        <AppButton
+          title={loading ? "Adding card..." : "Add Card"}
           onPress={handleSubmit}
-          disabled={!isFormFilled || loading}
+          disabled={!isFormFilled}
           loading={loading}
-          style={{borderRadius: 16, marginTop: 8}}
-          buttonColor={isFormFilled && !loading ? "#56034C" : "#E8D9EC"}
-          labelStyle={{
-            fontWeight: "700",
-            fontSize: 14,
-            color: isFormFilled && !loading ? "#ffffff" : "#9CA3AF",
-          }}
-        >
-          {loading ? "Adding card..." : "Add Card"}
-        </Button>
+          style={{marginTop: 8}}
+        />
       </ScrollView>
 
       <SuccessModal visible={showSuccess} onDone={handleDone} />

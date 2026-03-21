@@ -3,7 +3,7 @@ import "../global.css";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { MD3LightTheme, PaperProvider } from "react-native-paper";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { AppState } from "react-native";
 import { useAuthStore } from "@/stores/auth.store";
 
@@ -20,14 +20,26 @@ export default function RootLayout() {
   const initialize = useAuthStore((s) => s.initialize);
   const signOut = useAuthStore((s) => s.signOut);
   const router = useRouter();
+  const backgroundTimeRef = useRef<number | null>(null);
 
   useEffect(() => {
     initialize();
 
     const subscription = AppState.addEventListener("change", async (nextAppState) => {
       if (nextAppState === "background" || nextAppState === "inactive") {
-        await signOut();
-        router.replace("/(auth)/login" as any);
+        if (!backgroundTimeRef.current) {
+          backgroundTimeRef.current = Date.now();
+        }
+      } else if (nextAppState === "active") {
+        if (backgroundTimeRef.current) {
+          const elapsed = Date.now() - backgroundTimeRef.current;
+          backgroundTimeRef.current = null;
+          
+          if (elapsed > 3 * 60 * 1000) { // 3 minutes
+            await signOut();
+            router.replace("/(auth)/login" as any);
+          }
+        }
       }
     });
 

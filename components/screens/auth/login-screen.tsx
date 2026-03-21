@@ -1,10 +1,11 @@
 import React, {useState, useEffect} from "react";
 import {View, Text, Pressable, ScrollView, KeyboardAvoidingView, Platform, Alert} from "react-native";
-import {Button, TextInput} from "react-native-paper";
+import {TextInput} from "react-native-paper";
 import {useRouter} from "expo-router";
 import {SafeAreaView} from "react-native-safe-area-context";
 import {ScanFace} from "lucide-react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import {AppButton} from "@/components/ui/app-button";
 import {LoginForm, LoginFormErrors, validateLogin} from "@/components/features/auth";
 import {AuthInput} from "@/components/features/auth/auht-input";
 import {SocialButtons} from "@/components/features/auth/social-button";
@@ -99,17 +100,12 @@ const LoginScreen: React.FC = () => {
           </View>
 
           <View className="flex-row gap-x-3 items-center">
-            <Button
-              mode="contained"
+            <AppButton
+              title={loading ? "Signing in..." : "Login"}
               onPress={handleLogin}
               loading={loading}
-              disabled={loading}
-              style={{flex: 1, borderRadius: 14}}
-              buttonColor="#2D0D3A"
-              labelStyle={{fontWeight: "700", fontSize: 15}}
-            >
-              {loading ? "Signing in..." : "Login"}
-            </Button>
+              style={{flex: 1}}
+            />
 
             <Pressable
               className="w-14 h-14 rounded-2xl items-center justify-center active:opacity-70"

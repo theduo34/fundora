@@ -1,8 +1,9 @@
 import React, {useState} from "react";
 import {View, Text, Pressable, ScrollView, KeyboardAvoidingView, Platform, Alert} from "react-native";
-import {Button, TextInput} from "react-native-paper";
+import {TextInput} from "react-native-paper";
 import {useRouter} from "expo-router";
 import {SafeAreaView} from "react-native-safe-area-context";
+import {AppButton} from "@/components/ui/app-button";
 import {SignUpForm, SignUpFormErrors, validateSignUp} from "@/components/features/auth";
 import {AuthInput} from "@/components/features/auth/auht-input";
 import {SocialButtons} from "@/components/features/auth/social-button";
@@ -183,17 +184,12 @@ const SignUpScreen: React.FC = () => {
             )}
           </View>
 
-          <Button
-            mode="contained"
+          <AppButton
+            title={loading ? "Registering..." : "Create Account"}
             onPress={handleSignUp}
             loading={loading}
-            disabled={loading}
-            style={{borderRadius: 14, marginTop: 4}}
-            buttonColor="#2D0D3A"
-            labelStyle={{fontWeight: "700", fontSize: 15}}
-          >
-            {loading ? "Registering..." : "Create Account"}
-          </Button>
+            style={{marginTop: 4}}
+          />
 
           <View className="flex-row justify-center items-center gap-x-1">
             <Text className="text-sm text-muted-foreground">

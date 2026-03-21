@@ -1,5 +1,3 @@
-// ─── User ────────────────────────────────────────────────────────────────────
-
 import {GradientVariant} from "@/components/ui/gradient-view";
 
 export interface User {
@@ -14,8 +12,6 @@ export interface User {
   createdAt: string;    // ISO 8601
   updatedAt: string;
 }
-
-// ─── Card ────────────────────────────────────────────────────────────────────
 
 export type CardNetwork = "visa" | "mastercard" | "amex" | "discover";
 export type CardType    = "debit" | "credit" | "prepaid";
@@ -51,8 +47,6 @@ export interface Address {
   postalCode: string;
   country: string;
 }
-
-// ─── Transaction ─────────────────────────────────────────────────────────────
 
 export type TransactionType      = "debit" | "credit" | "transfer" | "topup" | "convert";
 export type TransactionStatus    = "pending" | "completed" | "failed" | "reversed";
@@ -123,8 +117,6 @@ export const dummyUser: User = {
   updatedAt: "2025-02-24T10:30:00.000Z",
 };
 
-// ─── Cards ────────────────────────────────────────────────────────────────────
-
 export const dummyCards: Card[] = [
   {
     id: "crd_01hx9z4qfkm3p8t2v6wb5yaaaa",
@@ -181,8 +173,6 @@ export const dummyCards: Card[] = [
     updatedAt: "2025-02-20T14:00:00.000Z",
   },
 ];
-
-// ─── Transactions ─────────────────────────────────────────────────────────────
 
 export const dummyTransactions: Transaction[] = [
   {

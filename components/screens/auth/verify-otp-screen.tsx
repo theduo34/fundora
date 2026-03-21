@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import { View, Text, Alert, KeyboardAvoidingView, Platform, ScrollView } from "react-native";
-import { Button, TextInput } from "react-native-paper";
+import { TextInput } from "react-native-paper";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { AppButton } from "@/components/ui/app-button";
 import { useAuthStore } from "@/stores/auth.store";
 import { AuthInput } from "@/components/features/auth/auht-input";
 
@@ -72,27 +73,21 @@ const VerifyOtpScreen: React.FC = () => {
             ) : null}
           </View>
 
-          <Button
-            mode="contained"
+          <AppButton
+            title={loading ? "Verifying..." : "Verify Account"}
             onPress={handleVerify}
             loading={loading}
-            disabled={loading || code.length < 6}
-            style={{borderRadius: 14, marginTop: 8}}
-            buttonColor="#2D0D3A"
-            labelStyle={{fontWeight: "700", fontSize: 15}}
-          >
-            {loading ? "Verifying..." : "Verify Account"}
-          </Button>
+            disabled={code.length < 6}
+            style={{marginTop: 8}}
+          />
 
-          <Button
-            mode="text"
+          <AppButton
+            title="Back to Login"
             onPress={() => router.replace("/(auth)/login" as any)}
             disabled={loading}
-            textColor="#56034C"
+            variant="ghost"
             style={{marginTop: 4}}
-          >
-            Back to Login
-          </Button>
+          />
         </ScrollView>
       </KeyboardAvoidingView>
     </SafeAreaView>

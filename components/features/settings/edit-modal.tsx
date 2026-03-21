@@ -1,6 +1,7 @@
 import React, {useState} from "react";
 import {View, Text} from "react-native";
-import {Modal, Portal, TextInput, Button} from "react-native-paper";
+import {Modal, Portal, TextInput} from "react-native-paper";
+import {AppButton} from "@/components/ui/app-button";
 import {EditField} from "@/components/features/settings/index";
 
 interface EditFieldModalProps {
@@ -78,25 +79,18 @@ export const EditFieldModal: React.FC<EditFieldModalProps> = ({
 
         {/* Actions */}
         <View style={{flexDirection: "row", gap: 12}}>
-          <Button
-            mode="text"
+          <AppButton
+            title="Cancel"
+            variant="ghost"
             onPress={handleCancel}
             style={{flex: 1}}
-            textColor="#EB1254"
-            labelStyle={{fontWeight: "700"}}
-          >
-            Cancel
-          </Button>
-          <Button
-            mode="contained"
+          />
+          <AppButton
+            title="Enter"
             onPress={handleSave}
             disabled={!value.trim()}
-            style={{flex: 1, borderRadius: 12}}
-            buttonColor="#56034C"
-            labelStyle={{fontWeight: "700"}}
-          >
-            Enter
-          </Button>
+            style={{flex: 1}}
+          />
         </View>
       </Modal>
     </Portal>

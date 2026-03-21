@@ -106,7 +106,7 @@ const CardsScreen: React.FC = () => {
                     key={tx.id}
                     transaction={tx}
                     onPress={(tx) => router.push({
-                      pathname: "/(protected)/(tabs)/transactions/[id]",
+                      pathname: "/(protected)/(stack)/transactions/[id]",
                       params: {id: tx.id},
                     } as any)}
                   />

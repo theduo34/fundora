@@ -1,7 +1,7 @@
 import React, {useRef, useState} from "react";
 import {View, Text, Pressable, Dimensions, FlatList, Image, ViewToken} from "react-native";
 import {SafeAreaView} from "react-native-safe-area-context";
-import {Button} from "react-native-paper";
+import {AppButton} from "@/components/ui/app-button";
 import {useRouter} from "expo-router";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
@@ -12,20 +12,20 @@ const slides = [
   {
     id: "1",
     image: "https://images.unsplash.com/photo-1579621970590-9d624316904b?w=600&q=80",
-    title: "Welcome to Fundify, the ultimate financial management app!",
-    subtitle: "With Fundify, you can easily keep track of your expenses, investments, and savings all in one place. Let's get started by setting up your account.",
+    title: "Welcome to Fundora, the ultimate financial management app!",
+    subtitle: "With Fundora, you can easily keep track of your expenses, investments, and savings all in one place. Let's get started by setting up your account.",
   },
   {
     id: "2",
     image: "https://images.unsplash.com/photo-1563013544-824ae1b704d3?w=600&q=80",
     title: "Are you ready to take control of your finances?",
-    subtitle: "With Fundify, you can do just that. Our easy-to-use app allows you to manage your money and investments effortlessly. Let's start by creating your account.",
+    subtitle: "With Fundora, you can do just that. Our easy-to-use app allows you to manage your money and investments effortlessly. Let's start by creating your account.",
   },
   {
     id: "3",
     image: "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=600&q=80",
-    title: "Thank you for choosing Fundify, the all-in-one finance app.",
-    subtitle: "With Fundify, you can monitor your income, expenses, and investments with ease. Let's begin by setting up your account and start managing your money like a pro.",
+    title: "Thank you for choosing Fundora, the all-in-one finance app.",
+    subtitle: "With Fundora, you can monitor your income, expenses, and investments with ease. Let's begin by setting up your account and start managing your money like a pro.",
   },
 ];
 
@@ -133,15 +133,10 @@ const OnboardingScreen: React.FC = () => {
 
       <View className="px-6 pb-6 gap-y-5 bg-background">
         <Dots count={slides.length} active={active} />
-        <Button
-          mode="contained"
+        <AppButton
+          title={isLast ? "Get started" : "Continue"}
           onPress={handleNext}
-          style={{borderRadius: 14}}
-          buttonColor="#2D0D3A"
-          labelStyle={{fontWeight: "700", fontSize: 15, paddingVertical: 4}}
-        >
-          {isLast ? "Get started" : "Continue"}
-        </Button>
+        />
       </View>
 
     </SafeAreaView>

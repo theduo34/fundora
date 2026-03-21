@@ -8,7 +8,7 @@ import {useAuthStore} from "@/stores/auth.store";
 
 const {width: W, height: H} = Dimensions.get("window");
 
-const SplashScreen: React.FC = () => {
+const  SplashScreen: React.FC = () => {
   const router  = useRouter();
   const opacity = useRef(new Animated.Value(0)).current;
   const scale   = useRef(new Animated.Value(0.8)).current;
@@ -29,7 +29,7 @@ const SplashScreen: React.FC = () => {
       }),
     ]).start();
 
-    // Navigate to onboarding or login after 2.5s
+    // Navigate to (onboarding) or login after 4s
     const timer = setTimeout(async () => {
       try {
         await signOut(); // Force logout on fresh launch to simulate session security
@@ -42,7 +42,7 @@ const SplashScreen: React.FC = () => {
       } catch (e) {
         router.replace("/(onboarding)" as any);
       }
-    }, 2500);
+    }, 4000);
 
     return () => clearTimeout(timer);
   }, []);

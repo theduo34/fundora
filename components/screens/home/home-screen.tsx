@@ -1,7 +1,7 @@
 import React, {useEffect} from "react";
 import {Bell} from "lucide-react-native";
 import {useRouter} from "expo-router";
-import {ActivityIndicator, Pressable, View} from "react-native";
+import {ActivityIndicator, Pressable, View, Text} from "react-native";
 import ScreenLayout from "@/components/layout/screen-layout";
 import {quickActions, QuickActionKey} from "@/components/features/home";
 import {CardCarousel} from "@/components/features/cards/card-carousel";
@@ -11,6 +11,7 @@ import {UserProfile} from "@/components/shared/user-profile";
 import {useAuthStore} from "@/stores/auth.store";
 import {useCardStore} from "@/stores/card.store";
 import {useTransactionStore} from "@/stores/transaction.store";
+import {useNotificationStore} from "@/stores/notification.store";
 import {mapCard, mapTransaction} from "@/lib/mappers";
 
 const HomeScreen: React.FC = () => {
@@ -18,11 +19,13 @@ const HomeScreen: React.FC = () => {
   const profile = useAuthStore((s) => s.profile);
   const {cards, fetchCards, loading: cardsLoading} = useCardStore();
   const {transactions, fetchTransactions, loading: txLoading} = useTransactionStore();
+  const {notifications, fetchNotifications} = useNotificationStore();
 
   useEffect(() => {
     if (profile?.id) {
       fetchCards(profile.id);
       fetchTransactions(profile.id);
+      fetchNotifications(profile.id);
     }
   }, [profile?.id]);
 
@@ -38,6 +41,7 @@ const HomeScreen: React.FC = () => {
 
   const uiCards = cards.map(mapCard);
   const uiTransactions = transactions.map(mapTransaction);
+  const unreadCount = notifications.filter(n => n.status === "unread").length;
 
   if (cardsLoading && txLoading) {
     return (
@@ -54,12 +58,14 @@ const HomeScreen: React.FC = () => {
       screen="home"
       navbarLeftContent={<UserProfile />}
       navbarRightContent={
-        <Pressable onPress={() => router.push("/notifications")}>
-          <Bell size={22} color="#2D0D3A" strokeWidth={1.8} />
+        <Pressable onPress={() => router.push("/(protected)/(stack)/notifications" as any)} className="relative">
+          <Bell size={24} color="#2D0D3A" strokeWidth={1.8} />
+          {unreadCount > 0 && (
+            <View className="absolute -top-1 -right-0.5 w-3 h-3 bg-red-500 rounded-full border-[1.5px] border-background" />
+          )}
         </Pressable>
       }
-      className={"flex flex-col gap-4"}
-    >
+      className={"flex flex-col gap-4"}>
       <CardCarousel cards={uiCards} />
       <QuickActionsRow actions={quickActions} onAction={handleQuickAction} />
       <TransactionList

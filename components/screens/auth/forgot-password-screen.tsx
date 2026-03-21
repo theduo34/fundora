@@ -1,8 +1,9 @@
 import React, {useState} from "react";
 import {View, Text, Pressable, KeyboardAvoidingView, Platform} from "react-native";
-import {Button, TextInput} from "react-native-paper";
+import {TextInput} from "react-native-paper";
 import {useRouter} from "expo-router";
 import {SafeAreaView} from "react-native-safe-area-context";
+import {AppButton} from "@/components/ui/app-button";
 import {Mail} from "lucide-react-native";
 import {AuthInput} from "@/components/features/auth/auht-input";
 
@@ -41,17 +42,12 @@ const EnterEmailStep: React.FC<{
             {error && <Text className="text-xs text-red-600">{error}</Text>}
         </View>
 
-        <Button
-            mode="contained"
+        <AppButton
+            title={loading ? "Sending..." : "Send Reset Link"}
             onPress={onSubmit}
             loading={loading}
-            disabled={!email.trim() || loading}
-            style={{borderRadius: 14}}
-            buttonColor="#2D0D3A"
-            labelStyle={{fontWeight: "700", fontSize: 15}}
-        >
-            Send Reset Link
-        </Button>
+            disabled={!email.trim()}
+        />
 
         <Pressable onPress={onBack} className="items-center active:opacity-60">
             <Text className="text-sm font-semibold text-primary">Back to Login</Text>
@@ -76,15 +72,11 @@ const EmailSentStep: React.FC<{ email: string; onBack: () => void }> = ({
             </Text>
         </View>
 
-        <Button
-            mode="contained"
+        <AppButton
+            title="Back to Login"
             onPress={onBack}
-            style={{borderRadius: 14, width: "100%"}}
-            buttonColor="#2D0D3A"
-            labelStyle={{fontWeight: "700", fontSize: 15}}
-        >
-            Back to Login
-        </Button>
+            style={{ width: "100%" }}
+        />
 
         <Text className="text-xs text-muted-foreground text-center">
             {"Didn't receive it?"}{" "}

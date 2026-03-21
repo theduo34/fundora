@@ -31,11 +31,11 @@ const CATEGORY_ICONS: Record<string, LucideIcon> = {
 
 interface CategoryRowProps {
   item: PieDataItem;
+  amountData: { amount: number; positive: boolean };
   onCategoryPress?: (item: PieDataItem) => void;
 }
 
-export const CategoryRow: React.FC<CategoryRowProps> = ({item, onCategoryPress}) => {
-  const amountData = categoryAmounts[item.text];
+export const CategoryRow: React.FC<CategoryRowProps> = ({item, amountData, onCategoryPress}) => {
   const IconComponent = CATEGORY_ICONS[item.text] ?? MoreHorizontal;
 
   const formatted = (amountData.amount / 100).toLocaleString("en-US", {

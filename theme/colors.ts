@@ -24,19 +24,33 @@ export const palette = {
 };
 
 export const gradients: Record<string, GradientTuple> = {
+  // primary: [
+  //   palette.brand[900] as ColorValue,
+  //   palette.brand[800] as ColorValue,
+  //   palette.brand[700] as ColorValue,
+  //   palette.brand[600] as ColorValue,
+  //   palette.brand[500] as ColorValue,
+  // ],
+  // secondary: [
+  //   palette.card[900] as ColorValue,
+  //   palette.card[800] as ColorValue,
+  //   palette.card[700] as ColorValue,
+  //   palette.card[600] as ColorValue,
+  //   palette.card[500] as ColorValue,
+  // ],
   primary: [
-    palette.brand[900] as ColorValue,
-    palette.brand[800] as ColorValue,
-    palette.brand[700] as ColorValue,
-    palette.brand[600] as ColorValue,
-    palette.brand[500] as ColorValue,
+    "#56034C",  // --chart-4
+    "#890058",  // --chart-3
+    "#BC005B",  // --chart-2
+    "#EB1254",  // --chart-1
+    "#EB1254",  // --ring
   ],
   secondary: [
-    palette.card[900] as ColorValue,
-    palette.card[800] as ColorValue,
-    palette.card[700] as ColorValue,
-    palette.card[600] as ColorValue,
-    palette.card[500] as ColorValue,
+    "#56034C",  // --chart-4
+    "#56034C",  // --chart-4
+    "#280537",  // --chart-5
+    "#280537",  // --chart-5
+    "#280537",  // --chart-5
   ],
 };
 

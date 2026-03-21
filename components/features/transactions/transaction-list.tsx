@@ -9,16 +9,41 @@ const getAmountColor = (type: Transaction["type"]): string => {
   switch (type) {
     case "credit":
     case "topup":
-      return "text-green";
+      return "#16a34a"; // Green
     case "debit":
-      return "text-red";
+      return "#dc2626"; // Red
     case "transfer":
-      return "text-secondary";
+      return "#890058"; // Secondary
     case "convert":
-      return "text-accent";
+      return "#BC005B"; // Accent
     default:
-      return "text-foreground";
+      return "#2D0D3A"; // Foreground
   }
+};
+
+import {
+  ShoppingBag, ShoppingCart, GraduationCap, Bus, Utensils, Zap, HeartPulse, Plane, Gamepad2, Tag, ArrowUpRight, ArrowDownLeft, PlusCircle, RefreshCcw, HelpCircle
+} from "lucide-react-native";
+
+const CATEGORY_ICONS: Record<string, any> = {
+  Shops: ShoppingBag,
+  Supermarkets: ShoppingCart,
+  Education: GraduationCap,
+  Transport: Bus,
+  Food: Utensils,
+  Utilities: Zap,
+  Health: HeartPulse,
+  Travel: Plane,
+  Gaming: Gamepad2,
+  Other: Tag,
+};
+
+const TYPE_ICONS: Record<string, any> = {
+  debit: ArrowUpRight,
+  credit: ArrowDownLeft,
+  topup: PlusCircle,
+  convert: RefreshCcw,
+  transfer: ArrowUpRight,
 };
 
 const TransactionAvatar: React.FC<{ tx: Transaction }> = ({tx}) => {
@@ -28,22 +53,21 @@ const TransactionAvatar: React.FC<{ tx: Transaction }> = ({tx}) => {
     return (
       <Image
         source={{uri: logoUrl}}
-        className="w-11 h-11 rounded-full bg-muted border border-secondary-foreground"
+        className="w-11 h-11 rounded-full bg-muted border border-border"
         resizeMode="cover"
       />
     );
   }
 
-  const initials = tx.type
-    .split(" ")
-    .slice(0, 2)
-    .map((w) => w[0])
-    .join("")
-    .toUpperCase();
+  const IconComponent = CATEGORY_ICONS[tx.category] ?? TYPE_ICONS[tx.type] ?? HelpCircle;
+  const color = getAmountColor(tx.type);
 
   return (
-    <View className="w-11 h-11 rounded-full bg-card items-center justify-center">
-      <Text className="text-sm font-bold text-secondary">{initials}</Text>
+    <View 
+      className="w-11 h-11 rounded-full items-center justify-center border border-border"
+      style={{ backgroundColor: color + "10" }}
+    >
+      <IconComponent size={20} color={color} strokeWidth={2} />
     </View>
   );
 };
@@ -65,19 +89,27 @@ export const TransactionItem: React.FC<TransactionItemProps> = ({transaction: tx
       <TransactionAvatar tx={tx}/>
 
       <View className="flex-1 gap-y-0.5">
-        <Text className="text-sm font-semibold " numberOfLines={1}>
+        <Text className="text-sm font-semibold text-foreground" numberOfLines={1}>
           {tx.description}
         </Text>
-        <Text className="text-xs ">
-          {formatDate(tx.createdAt)}
+        <Text className="text-[10px] text-muted-foreground uppercase tracking-widest">
+          {tx.category} • {formatDate(tx.createdAt)}
         </Text>
       </View>
 
-      <Text
-        className={`text-sm font-semibold ${getAmountColor(tx.type)}`}
-      >
-        {formatAmount(tx)}
-      </Text>
+      <View className="items-end">
+        <Text
+          className="text-sm font-bold"
+          style={{ color: getAmountColor(tx.type) }}
+        >
+          {tx.type === "credit" || tx.type === "topup" ? "+" : "-"}{formatAmount(tx)}
+        </Text>
+        {tx.reference && (
+          <Text className="text-[9px] text-muted-foreground font-mono">
+            {tx.reference.slice(0, 8)}
+          </Text>
+        )}
+      </View>
     </Pressable>
   );
 };

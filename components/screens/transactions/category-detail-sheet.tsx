@@ -5,9 +5,8 @@ import {
   Utensils, Zap, HeartPulse, Plane, Gamepad, Tag, LucideIcon,
 } from "lucide-react-native";
 import {TransactionItem} from "@/components/features/transactions/transaction-list";
-import {dummyTransactions} from "@/components/features/home";
 import {
-  categoryAmounts, PieDataItem,
+  PieDataItem,
 } from "@/components/features/transactions";
 
 
@@ -35,15 +34,12 @@ const StatPill: React.FC<{ label: string; value: string; color: string }> = ({la
 
 interface CategoryDetailSheetProps {
   item: PieDataItem;
+  amountData: { amount: number; positive: boolean };
+  transactions: any[];
 }
 
-export const CategoryDetailSheet: React.FC<CategoryDetailSheetProps> = ({item}) => {
-  const amountData = categoryAmounts[item.text];
+export const CategoryDetailSheet: React.FC<CategoryDetailSheetProps> = ({item, amountData, transactions}) => {
   const IconComponent = CATEGORY_ICONS[item.text] ?? Tag;
-
-  const transactions = dummyTransactions.filter(
-    (tx) => tx.category.toLowerCase() === item.text.toLowerCase()
-  );
 
   const formatted = (amountData.amount / 100).toLocaleString("en-US", {
     style: "currency", currency: "USD",
@@ -76,7 +72,7 @@ export const CategoryDetailSheet: React.FC<CategoryDetailSheetProps> = ({item}) 
         </Text>
 
         <Text className="text-xs text-muted-foreground">
-          This week · {item.count} transactions
+          This month · {transactions.length} transactions
         </Text>
       </View>
 
@@ -88,7 +84,7 @@ export const CategoryDetailSheet: React.FC<CategoryDetailSheetProps> = ({item}) 
         />
         <StatPill
           label="transactions"
-          value={String(item.count)}
+          value={String(transactions.length)}
           color={item.color}
         />
         <StatPill

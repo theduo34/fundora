@@ -16,6 +16,19 @@ import {useAuthStore} from "@/stores/auth.store";
 import {useTransactionStore} from "@/stores/transaction.store";
 import {mapTransaction} from "@/lib/mappers";
 
+const CATEGORY_COLORS: Record<string, string> = {
+  Shops: "#56034C",
+  Supermarkets: "#EB1254",
+  Education: "#BC005B",
+  Transport: "#890058",
+  Food: "#5C3568",
+  Utilities: "#BC005B",
+  Health: "#EB1254",
+  Travel: "#56034C",
+  Gaming: "#890058",
+  Other: "#E8D9EC",
+};
+
 const TransactionsScreen: React.FC = () => {
   const router = useRouter();
   const profile = useAuthStore((s) => s.profile);
@@ -30,6 +43,37 @@ const TransactionsScreen: React.FC = () => {
 
   const uiTransactions = transactions.map(mapTransaction);
 
+  // Dynamic Pie Data calculation
+  const categoryMap = uiTransactions.reduce((acc, tx) => {
+    const cat = tx.category || "Other";
+    if (!acc[cat]) {
+      acc[cat] = { total: 0, count: 0, transactions: [] };
+    }
+    acc[cat].total += tx.amount;
+    acc[cat].count += 1;
+    acc[cat].transactions.push(tx);
+    return acc;
+  }, {} as Record<string, { total: number; count: number; transactions: any[] }>);
+
+  const totalSpend = uiTransactions.reduce((sum, tx) => sum + tx.amount, 0);
+  
+  const dynamicPieData: PieDataItem[] = Object.keys(categoryMap).map((cat) => ({
+    text: cat,
+    value: totalSpend > 0 ? Math.round((categoryMap[cat].total / totalSpend) * 100) : 0,
+    count: categoryMap[cat].count,
+    color: CATEGORY_COLORS[cat] ?? "#9CA3AF",
+  }));
+
+  const dynamicCategoryAmounts: Record<string, { amount: number; positive: boolean }> = Object.keys(categoryMap).reduce((acc, cat) => {
+    const txs = categoryMap[cat].transactions;
+    const hasCredit = txs.some(t => t.type === "credit" || t.type === "topup");
+    acc[cat] = {
+      amount: categoryMap[cat].total,
+      positive: hasCredit && !txs.some(t => t.type === "debit"), // Simplified logic for UI
+    };
+    return acc;
+  }, {} as any);
+
   return (
     <>
     <ScreenLayout
@@ -38,7 +82,7 @@ const TransactionsScreen: React.FC = () => {
       scrollable={false}
       navbarRightContent={
         <Pressable
-          onPress={() => router.push("/(protected)/(stack)/add-card" as any)}
+          onPress={() => router.push("/(protected)/(stack)/send" as any)}
           className="w-9 h-9 rounded-full bg-card border border-border items-center justify-center active:opacity-60"
           hitSlop={{top: 8, bottom: 8, left: 8, right: 8}}
         >
@@ -54,7 +98,7 @@ const TransactionsScreen: React.FC = () => {
 
         {activeTab === "Transactions"
           ? <TransactionsChart period={period} />
-          : <CategoriesChart period={period} />
+          : <CategoriesChart period={period} data={dynamicPieData} />
         }
 
         <TabSwitcher selected={activeTab} onChange={setActiveTab} />
@@ -70,7 +114,7 @@ const TransactionsScreen: React.FC = () => {
                   key={tx.id}
                   transaction={tx}
                   onPress={(tx) => router.push({
-                    pathname: "/(stack)/transactions/[id]",
+                    pathname: "/(protected)/(stack)/transactions/[id]",
                     params: {id: tx.id},
                   } as any)}
                 />
@@ -83,10 +127,11 @@ const TransactionsScreen: React.FC = () => {
               Categories
             </Text>
             <View className="gap-y-2">
-              {pieData.map((item) => (
+              {dynamicPieData.map((item) => (
                 <CategoryRow
                   key={item.text}
                   item={item}
+                  amountData={dynamicCategoryAmounts[item.text]}
                   onCategoryPress={(item) => setSelectedCategory(item)}
                 />
               ))}
@@ -102,7 +147,13 @@ const TransactionsScreen: React.FC = () => {
         title={selectedCategory?.text}
         heightRatio={0.75}
       >
-        {selectedCategory && <CategoryDetailSheet item={selectedCategory} />}
+        {selectedCategory && (
+          <CategoryDetailSheet 
+            item={selectedCategory} 
+            amountData={dynamicCategoryAmounts[selectedCategory.text]}
+            transactions={categoryMap[selectedCategory.text].transactions}
+          />
+        )}
       </BottomSheet>
     </>
   );
