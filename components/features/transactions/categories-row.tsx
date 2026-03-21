@@ -1,42 +1,17 @@
 import React from "react";
-import {View, Text, Pressable} from "react-native";
-import {
-  ShoppingBag,
-  ShoppingCart,
-  GraduationCap,
-  Bus,
-  Utensils,
-  Zap,
-  HeartPulse,
-  Plane,
-  Gamepad2,
-  MoreHorizontal,
-  LucideIcon,
-  Tag
-} from "lucide-react-native";
-import {PieDataItem, categoryAmounts} from "@/components/features/transactions/index";
+import {PieDataItem} from "@/components/features/transactions/index";
+import {getCategoryConfig} from "@/constants/categories";
 
-const CATEGORY_ICONS: Record<string, LucideIcon> = {
-  Shops: ShoppingBag,
-  Supermarkets: ShoppingCart,
-  Education: GraduationCap,
-  Transport: Bus,
-  Food: Utensils,
-  Utilities: Zap,
-  Health: HeartPulse,
-  Travel: Plane,
-  Gaming: Gamepad2,
-  Other: Tag,
-};
-
-interface CategoryRowProps {
+export interface CategoryRowProps {
   item: PieDataItem;
   amountData: { amount: number; positive: boolean };
-  onCategoryPress?: (item: PieDataItem) => void;
+  onPress?: (item: PieDataItem) => void;
 }
 
-export const CategoryRow: React.FC<CategoryRowProps> = ({item, amountData, onCategoryPress}) => {
-  const IconComponent = CATEGORY_ICONS[item.text] ?? MoreHorizontal;
+export const CategoryRow: React.FC<CategoryRowProps> = ({item, amountData, onPress}) => {
+  const config = getCategoryConfig(item.text);
+  const IconComponent = config.icon;
+  const color = config.color;
 
   const formatted = (amountData.amount / 100).toLocaleString("en-US", {
     style: "currency",
@@ -45,17 +20,17 @@ export const CategoryRow: React.FC<CategoryRowProps> = ({item, amountData, onCat
 
   return (
     <Pressable
-      onPress={() => onCategoryPress?.(item)}
+      onPress={() => onPress?.(item)}
       className="flex-row items-center gap-x-3 p-3 bg-card rounded-lg">
       <View
         className="w-11 h-11 rounded-full items-center justify-center shrink-0 border border-border"
-        style={{backgroundColor: item.color + "28"}}
+        style={{backgroundColor: color + "28"}}
       >
-        <IconComponent size={18} color={item.color} strokeWidth={1.8}/>
+        <IconComponent size={18} color={color} strokeWidth={1.8}/>
       </View>
 
       <View className="flex-1">
-        <Text className="text-sm font-semibold ">{item.text}</Text>
+        <Text className="text-sm font-semibold ">{config.label}</Text>
         <Text className="text-xs text-foreground">{item.count} Transactions</Text>
       </View>
 

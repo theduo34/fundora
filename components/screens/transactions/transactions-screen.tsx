@@ -2,7 +2,7 @@ import React, {useState, useEffect} from "react";
 import {View, Text, ScrollView, Pressable} from "react-native";
 import ScreenLayout from "@/components/layout/screen-layout";
 import {PeriodSelector} from "@/components/features/transactions/period-selector";
-import {Period, pieData, PieDataItem, TransactionTabType} from "@/components/features/transactions";
+import {Period, pieData, PieDataItem, TransactionTabType} from "@/components/features/transactions/index";
 import {TransactionsChart} from "@/components/features/transactions/transactions-chart";
 import {CategoriesChart} from "@/components/features/transactions/categories-chart";
 import {TabSwitcher} from "@/components/features/transactions/tab-switcher";
@@ -28,6 +28,8 @@ const CATEGORY_COLORS: Record<string, string> = {
   Gaming: "#890058",
   Other: "#E8D9EC",
 };
+
+import {getCategoryConfig} from "@/constants/categories";
 
 const TransactionsScreen: React.FC = () => {
   const router = useRouter();
@@ -61,7 +63,7 @@ const TransactionsScreen: React.FC = () => {
     text: cat,
     value: totalSpend > 0 ? Math.round((categoryMap[cat].total / totalSpend) * 100) : 0,
     count: categoryMap[cat].count,
-    color: CATEGORY_COLORS[cat] ?? "#9CA3AF",
+    color: getCategoryConfig(cat).color,
   }));
 
   const dynamicCategoryAmounts: Record<string, { amount: number; positive: boolean }> = Object.keys(categoryMap).reduce((acc, cat) => {
@@ -149,9 +151,9 @@ const TransactionsScreen: React.FC = () => {
       >
         {selectedCategory && (
           <CategoryDetailSheet 
-            item={selectedCategory} 
+            item={selectedCategory as PieDataItem} 
             amountData={dynamicCategoryAmounts[selectedCategory.text]}
-            transactions={categoryMap[selectedCategory.text].transactions}
+            transactions={transactions.filter(t => t.category.toLowerCase() === selectedCategory.text.toLowerCase())}
           />
         )}
       </BottomSheet>

@@ -16,8 +16,8 @@ const VerifyOtpScreen: React.FC = () => {
   const [error, setError] = useState("");
 
   const handleVerify = async () => {
-    if (!code || code.length < 6) {
-      setError("Please enter a valid 6-digit code.");
+    if (!code || code.length < 8) {
+      setError("Please enter a valid 8-digit code.");
       return;
     }
     
@@ -64,7 +64,7 @@ const VerifyOtpScreen: React.FC = () => {
                 if (error) setError("");
               }}
               keyboardType="number-pad"
-              maxLength={6}
+              maxLength={8}
               error={error}
               left={<TextInput.Icon icon="shield-key-outline" color="#9CA3AF" />}
             />
@@ -77,7 +77,7 @@ const VerifyOtpScreen: React.FC = () => {
             title={loading ? "Verifying..." : "Verify Account"}
             onPress={handleVerify}
             loading={loading}
-            disabled={code.length < 6}
+            disabled={code.length < 8}
             style={{marginTop: 8}}
           />
 

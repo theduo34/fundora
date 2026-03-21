@@ -24,16 +24,16 @@ export default function TabsLayout() {
         tabBarActiveTintColor: "#56034C",
         tabBarInactiveTintColor: "#9CA3AF",
         tabBarStyle: {
-          height: 72,
-          paddingBottom: 10,
-          paddingTop: 8,
+          height: 68,
+          paddingBottom: 8,
+          paddingTop: 4,
           borderTopWidth: 0,
           elevation: 0,
         },
         tabBarLabelStyle: {
           fontSize: 12,
           fontWeight: "500",
-          marginTop: 2,
+          marginTop: 1,
         },
       }}
     >
@@ -68,7 +68,7 @@ export default function TabsLayout() {
                     >
                       <IconComponent
                         color="#fff"
-                        size={28}
+                        size={24}
                         strokeWidth={2.5}
                       />
                     </View>

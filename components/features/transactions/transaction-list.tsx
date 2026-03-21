@@ -2,8 +2,9 @@ import React from "react";
 import {View, Text, Image, Pressable} from "react-native";
 import {Transaction} from "@/components/features/home";
 import {formatAmount, formatDate} from "@/lib/helper";
-import {ChevronRight} from "lucide-react-native";
+import {ChevronRight, HelpCircle} from "lucide-react-native";
 import {useRouter} from "expo-router";
+import {getCategoryConfig} from "@/constants/categories";
 
 const getAmountColor = (type: Transaction["type"]): string => {
   switch (type) {
@@ -21,32 +22,11 @@ const getAmountColor = (type: Transaction["type"]): string => {
   }
 };
 
-import {
-  ShoppingBag, ShoppingCart, GraduationCap, Bus, Utensils, Zap, HeartPulse, Plane, Gamepad2, Tag, ArrowUpRight, ArrowDownLeft, PlusCircle, RefreshCcw, HelpCircle
-} from "lucide-react-native";
-
-const CATEGORY_ICONS: Record<string, any> = {
-  Shops: ShoppingBag,
-  Supermarkets: ShoppingCart,
-  Education: GraduationCap,
-  Transport: Bus,
-  Food: Utensils,
-  Utilities: Zap,
-  Health: HeartPulse,
-  Travel: Plane,
-  Gaming: Gamepad2,
-  Other: Tag,
-};
-
-const TYPE_ICONS: Record<string, any> = {
-  debit: ArrowUpRight,
-  credit: ArrowDownLeft,
-  topup: PlusCircle,
-  convert: RefreshCcw,
-  transfer: ArrowUpRight,
-};
-
 const TransactionAvatar: React.FC<{ tx: Transaction }> = ({tx}) => {
+  const config = getCategoryConfig(tx.category);
+  const IconComponent = config.icon;
+  const color = config.color;
+
   const logoUrl = tx.merchantLogoUrl ?? tx.counterparty?.avatarUrl ?? null;
 
   if (logoUrl) {
@@ -58,9 +38,6 @@ const TransactionAvatar: React.FC<{ tx: Transaction }> = ({tx}) => {
       />
     );
   }
-
-  const IconComponent = CATEGORY_ICONS[tx.category] ?? TYPE_ICONS[tx.type] ?? HelpCircle;
-  const color = getAmountColor(tx.type);
 
   return (
     <View 

@@ -53,10 +53,26 @@ const ProfileScreen: React.FC = () => {
         await updateProfile(updates as any);
     };
 
-    const handleSignOut = async () => {
-        await signOut();
-        await AsyncStorage.removeItem("hasSeenOnboarding");
-        router.replace("/(auth)/login" as any);
+    const handleSignOut = () => {
+        Alert.alert(
+            "Sign Out",
+            "Are you sure you want to sign out?",
+            [
+                { text: "Cancel", style: "cancel" },
+                {
+                    text: "Sign Out",
+                    style: "destructive",
+                    onPress: async () => {
+                        await signOut();
+                        // Reset onboarding for better testing/presentation if needed, 
+                        // though usually we don't want to clear it on logout.
+                        // However, the user specifically mentioned onboarding only shows first time OR intentional logout.
+                        await AsyncStorage.removeItem("hasSeenOnboarding");
+                        router.replace("/(auth)/login" as any);
+                    }
+                }
+            ]
+        );
     };
 
     return (

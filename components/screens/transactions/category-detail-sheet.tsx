@@ -10,18 +10,7 @@ import {
 } from "@/components/features/transactions";
 
 
-const CATEGORY_ICONS: Record<string, LucideIcon> = {
-  Shops: ShoppingBag,
-  Supermarkets: ShoppingCart,
-  Education: GraduationCap,
-  Transport: Bus,
-  Food: Utensils,
-  Utilities: Zap,
-  Health: HeartPulse,
-  Travel: Plane,
-  Gaming: Gamepad,
-  Other: Tag,
-};
+import {getCategoryConfig} from "@/constants/categories";
 
 
 const StatPill: React.FC<{ label: string; value: string; color: string }> = ({label, value, color,
@@ -39,7 +28,9 @@ interface CategoryDetailSheetProps {
 }
 
 export const CategoryDetailSheet: React.FC<CategoryDetailSheetProps> = ({item, amountData, transactions}) => {
-  const IconComponent = CATEGORY_ICONS[item.text] ?? Tag;
+  const config = getCategoryConfig(item.text);
+  const IconComponent = config.icon;
+  const color = config.color;
 
   const formatted = (amountData.amount / 100).toLocaleString("en-US", {
     style: "currency", currency: "USD",
