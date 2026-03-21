@@ -16,7 +16,7 @@ export const TabSwitcher: React.FC<TabSwitcherProps> = ({selected, onChange}) =>
         <Pressable
           key={t}
           onPress={() => onChange(t)}
-          className="items-center pb-2"
+          className="items-center pb-2 mx-4"
         >
           <Text
             className="text-sm font-semibold"

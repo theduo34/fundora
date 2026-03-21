@@ -189,6 +189,7 @@ const SignUpScreen: React.FC = () => {
             onPress={handleSignUp}
             loading={loading}
             style={{marginTop: 4}}
+            variant={"primary"}
           />
 
           <View className="flex-row justify-center items-center gap-x-1">
