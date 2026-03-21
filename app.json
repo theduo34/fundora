@@ -57,6 +57,12 @@
         "projectId": "eb7cdfea-81b1-4298-aa7d-2aa939e06cf0"
       }
     },
-    "owner": "tech-crush"
+    "owner": "tech-crush",
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/eb7cdfea-81b1-4298-aa7d-2aa939e06cf0"
+    }
   }
 }
