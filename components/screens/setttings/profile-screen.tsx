@@ -127,7 +127,7 @@ const ProfileScreen: React.FC = () => {
                     title="Sign out"
                     variant="danger"
                     onPress={handleSignOut}
-                    style={{marginBottom: 8, flex: 1}}
+                    style={{marginBottom: 8}}
                 />
             </View>
 
