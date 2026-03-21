@@ -75,7 +75,7 @@ const EmailSentStep: React.FC<{ email: string; onBack: () => void }> = ({
         <AppButton
             title="Back to Login"
             onPress={onBack}
-            style={{ width: "100%" }}
+            style={{ width: "100%", flex: 1 }}
         />
 
         <Text className="text-xs text-muted-foreground text-center">

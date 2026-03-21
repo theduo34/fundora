@@ -2,7 +2,7 @@ import React, {useState, useEffect} from "react";
 import {View, Text, ScrollView, Pressable} from "react-native";
 import ScreenLayout from "@/components/layout/screen-layout";
 import {PeriodSelector} from "@/components/features/transactions/period-selector";
-import {Period, pieData, PieDataItem, TransactionTabType} from "@/components/features/transactions/index";
+import {Period, PieDataItem, TransactionTabType} from "@/components/features/transactions";
 import {TransactionsChart} from "@/components/features/transactions/transactions-chart";
 import {CategoriesChart} from "@/components/features/transactions/categories-chart";
 import {TabSwitcher} from "@/components/features/transactions/tab-switcher";
@@ -15,20 +15,6 @@ import {Send} from "lucide-react-native";
 import {useAuthStore} from "@/stores/auth.store";
 import {useTransactionStore} from "@/stores/transaction.store";
 import {mapTransaction} from "@/lib/mappers";
-
-const CATEGORY_COLORS: Record<string, string> = {
-  Shops: "#56034C",
-  Supermarkets: "#EB1254",
-  Education: "#BC005B",
-  Transport: "#890058",
-  Food: "#5C3568",
-  Utilities: "#BC005B",
-  Health: "#EB1254",
-  Travel: "#56034C",
-  Gaming: "#890058",
-  Other: "#E8D9EC",
-};
-
 import {getCategoryConfig} from "@/constants/categories";
 
 const TransactionsScreen: React.FC = () => {
@@ -134,7 +120,7 @@ const TransactionsScreen: React.FC = () => {
                   key={item.text}
                   item={item}
                   amountData={dynamicCategoryAmounts[item.text]}
-                  onCategoryPress={(item) => setSelectedCategory(item)}
+                  onPress={(item: React.SetStateAction<PieDataItem | null>) => setSelectedCategory(item)}
                 />
               ))}
             </View>

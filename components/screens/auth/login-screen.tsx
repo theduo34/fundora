@@ -104,6 +104,7 @@ const LoginScreen: React.FC = () => {
               title={loading ? "Signing in..." : "Login"}
               onPress={handleLogin}
               loading={loading}
+              disabled={loading}
               style={{flex: 1}}
             />
 

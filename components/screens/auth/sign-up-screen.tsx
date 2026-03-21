@@ -188,7 +188,8 @@ const SignUpScreen: React.FC = () => {
             title={loading ? "Registering..." : "Create Account"}
             onPress={handleSignUp}
             loading={loading}
-            style={{marginTop: 4}}
+            disabled={loading}
+            style={{marginTop: 4, flex: 1}}
             variant={"primary"}
           />
 

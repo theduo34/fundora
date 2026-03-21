@@ -64,9 +64,6 @@ const ProfileScreen: React.FC = () => {
                     style: "destructive",
                     onPress: async () => {
                         await signOut();
-                        // Reset onboarding for better testing/presentation if needed, 
-                        // though usually we don't want to clear it on logout.
-                        // However, the user specifically mentioned onboarding only shows first time OR intentional logout.
                         await AsyncStorage.removeItem("hasSeenOnboarding");
                         router.replace("/(auth)/login" as any);
                     }
@@ -130,7 +127,7 @@ const ProfileScreen: React.FC = () => {
                     title="Sign out"
                     variant="danger"
                     onPress={handleSignOut}
-                    style={{marginBottom: 8}}
+                    style={{marginBottom: 8, flex: 1}}
                 />
             </View>
 

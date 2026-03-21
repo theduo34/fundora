@@ -1,6 +1,7 @@
 import React from "react";
 import {PieDataItem} from "@/components/features/transactions/index";
 import {getCategoryConfig} from "@/constants/categories";
+import {Pressable, View, Text} from "react-native";
 
 export interface CategoryRowProps {
   item: PieDataItem;
